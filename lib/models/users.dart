@@ -5,3 +5,10 @@ class UserData {
 
   UserData({this.name = '', this.profileImage = '', this.loginStatus = 0});
 }
+
+class User{
+
+  final String uid;
+  User({this.uid});
+
+}

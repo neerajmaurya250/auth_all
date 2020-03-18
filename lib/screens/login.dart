@@ -1,4 +1,5 @@
 import 'package:authall/models/users.dart';
+import 'package:authall/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -12,6 +13,14 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  //form validation
+  final AuthService _auth = AuthService();
+  final _formKey = GlobalKey<FormState>();
+  String email = '';
+  String password = '';
+  String error = '';
+  //form validation
+
   bool _isLoggedIn = false;
   Map userProfile;
   final facebookLogin = FacebookLogin();
@@ -60,9 +69,12 @@ class _LoginState extends State<Login> {
 
   _logout() {
     _googleSignIn.signOut();
+    facebookLogin.logOut();
+
     setState(() {
       _isLoggedIn = false;
       _userData.loginStatus = 2;
+      _userData.loginStatus = 1;
     });
   }
 
@@ -117,11 +129,13 @@ class _LoginState extends State<Login> {
                         SizedBox(height: screenData.height * 0.2),
                         Padding(
                           padding: const EdgeInsets.only(left: 50.0, right: 50.0),
-                          child: Container(
+                          child: Form(
+                            key: _formKey,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: <Widget>[
                                 TextFormField(
+                                  validator: (val) => val.isEmpty ? 'Enter username/email' : null,
                                   cursorColor: Colors.red,
                                   decoration: InputDecoration(
                                       hintText: 'email/username',
@@ -135,8 +149,11 @@ class _LoginState extends State<Login> {
                                           borderSide: BorderSide(color: Colors.red))),
                                 ),
                                 TextFormField(
+                                  obscureText: true,
+                                  validator: (val) => val.length < 6 ? 'Enter at least 7 char password' : null,
                                   cursorColor: Colors.red,
                                   decoration: InputDecoration(
+
                                       hintText: '********',
                                       hintStyle: TextStyle(fontSize: 20),
                                       focusedBorder: UnderlineInputBorder(
@@ -165,7 +182,16 @@ class _LoginState extends State<Login> {
                           height: 55,
                           width: 335,
                           child: RaisedButton(
-                            onPressed: () {},
+                            onPressed: () async {
+                              if(_formKey.currentState.validate()){
+                                dynamic result = await _auth.registerWithEmailAndPassword(email, password);
+                                if(result == null){
+                                  setState(() {
+                                    error = 'please supply valid email';
+                                  });
+                                }
+                              }
+                            },
                             child: Text(
                               'LOGIN',
                               style: TextStyle(color: Colors.red, fontSize: 20),
@@ -175,9 +201,13 @@ class _LoginState extends State<Login> {
                             color: Colors.white,
                             elevation: 0.0,
                           ),
+
                         ),
                         SizedBox(
                           height: 10,
+                        ),
+                        Text(
+                          error, style: TextStyle(color: Colors.red),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 40,right: 40),
