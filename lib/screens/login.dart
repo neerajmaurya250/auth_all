@@ -1,4 +1,5 @@
 import 'package:authall/models/users.dart';
+import 'package:authall/screens/dasboard_UI.dart';
 import 'package:authall/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
@@ -15,7 +16,6 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
 //form validation
 
-  final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
   String email = '';
   String password = '';
@@ -184,16 +184,8 @@ class _LoginState extends State<Login> {
                           height: 55,
                           width: 335,
                           child: RaisedButton(
-                            onPressed: () async {
+                            onPressed: ()  {
 
-                              if(_formKey.currentState.validate()){
-
-                                dynamic result = await _auth.registerWithEmailAndPassword(email,password);
-                                if(result == null){
-                                  setState(() =>error = 'please give valid email');
-                                }
-
-                              }
 
                             },
                             child: Text(

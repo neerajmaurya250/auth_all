@@ -6,9 +6,8 @@ class UserData {
   UserData({this.name = '', this.profileImage = '', this.loginStatus = 0});
 }
 
-class User{
 
+class User {
   final String uid;
-  User({this.uid});
-
+  User({ this.uid });
 }
