@@ -1,7 +1,6 @@
 import 'package:authall/models/users.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-
 class AuthService{
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -14,12 +13,6 @@ class AuthService{
   Stream<User> get user{
     return _auth.onAuthStateChanged.map(_userFromFirebaseUser);
   }
-
-
-
-
-
-  //register with email
 
   Future registerWithEmailAndPassword(String email,String password) async {
 
@@ -37,15 +30,6 @@ class AuthService{
 
   }
 
-  //sign out
 
-  Future signOut() async{
-    try{
-      return await _auth.signOut();
-    }catch(e){
-      print(e.toString());
-      return null;
-    }
-  }
 
 }

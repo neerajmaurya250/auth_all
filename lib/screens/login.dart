@@ -13,13 +13,15 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  //form validation
+//form validation
+
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
   String email = '';
   String password = '';
   String error = '';
-  //form validation
+
+//form validation
 
   bool _isLoggedIn = false;
   Map userProfile;
@@ -149,7 +151,7 @@ class _LoginState extends State<Login> {
                                           borderSide: BorderSide(color: Colors.red))),
                                 ),
                                 TextFormField(
-                                  obscureText: true,
+                                  obscureText: true    ,
                                   validator: (val) => val.length < 6 ? 'Enter at least 7 char password' : null,
                                   cursorColor: Colors.red,
                                   decoration: InputDecoration(
@@ -183,14 +185,16 @@ class _LoginState extends State<Login> {
                           width: 335,
                           child: RaisedButton(
                             onPressed: () async {
+
                               if(_formKey.currentState.validate()){
-                                dynamic result = await _auth.registerWithEmailAndPassword(email, password);
+
+                                dynamic result = await _auth.registerWithEmailAndPassword(email,password);
                                 if(result == null){
-                                  setState(() {
-                                    error = 'please supply valid email';
-                                  });
+                                  setState(() =>error = 'please give valid email');
                                 }
+
                               }
+
                             },
                             child: Text(
                               'LOGIN',
@@ -206,9 +210,7 @@ class _LoginState extends State<Login> {
                         SizedBox(
                           height: 10,
                         ),
-                        Text(
-                          error, style: TextStyle(color: Colors.red),
-                        ),
+
                         Padding(
                           padding: const EdgeInsets.only(left: 40,right: 40),
                           child: Row(

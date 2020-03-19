@@ -1,14 +1,11 @@
-import 'package:authall/models/users.dart';
 import 'package:authall/screens/login.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
 
 class LandingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
-    print(user);
+
     var dataScreen = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
