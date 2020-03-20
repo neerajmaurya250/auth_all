@@ -1,4 +1,5 @@
 import 'package:authall/models/users.dart';
+import 'package:authall/screens/dashboard.dart';
 import 'package:authall/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
@@ -86,23 +87,25 @@ class _LoginState extends State<Login> {
     return Scaffold(
       body: Center(
         child: _isLoggedIn
-            ? Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Image.network(
-                    _userData.profileImage,
-                    height: 50.0,
-                    width: 50.0,
-                  ),
-                  Text(_userData.name),
-                  OutlineButton(
-                    child: Text("Logout"),
-                    onPressed: () {
-                      _logout();
-                    },
-                  )
-                ],
-              )
+            ?
+//            Column(
+//                mainAxisAlignment: MainAxisAlignment.center,
+//                children: <Widget>[
+//                  Image.network(
+//                    _userData.profileImage,
+//                    height: 50.0,
+//                    width: 50.0,
+//                  ),
+//                  Text(_userData.name),
+//                  OutlineButton(
+//                    child: Text("Logout"),
+//                    onPressed: () {
+//                      _logout();
+//                    },
+//                  )
+//                ],
+//              )
+      Dashboard()
             : Container(
                 decoration: BoxDecoration(
                     image: DecorationImage(
