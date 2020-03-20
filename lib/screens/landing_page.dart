@@ -1,4 +1,5 @@
 import 'package:authall/screens/login.dart';
+import 'package:authall/screens/sign_up.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -52,7 +53,9 @@ class LandingPage extends StatelessWidget {
                           color: Colors.white,
                           width: 2.0,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute (builder: (context) => SignUp()));
+                        },
                         child: Text(
                           'SIGN UP',
                           style: TextStyle(color: Colors.white),
