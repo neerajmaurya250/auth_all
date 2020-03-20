@@ -1,3 +1,4 @@
+import 'package:authall/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -7,8 +8,17 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  final AuthService _auth = AuthService();
+  final _formKey = GlobalKey<FormState>();
+  String email = '';
+  String password = '';
+  String error = '';
+
+//form validation
   @override
   Widget build(BuildContext context) {
+    var screenData = MediaQuery.of(context).size;
+
     return Scaffold(
         body: Container(
       decoration: BoxDecoration(
@@ -25,8 +35,8 @@ class _SignUpState extends State<SignUp> {
               ),
 
               Positioned(
-                left: 185,
-                top: 200,
+                height: screenData.height * 0.5,
+                width: screenData.width * 1.0,
                 child: Icon(
                   FontAwesomeIcons.heartbeat,
                   color: Colors.red,
@@ -43,10 +53,11 @@ class _SignUpState extends State<SignUp> {
                     Padding(
                       padding: const EdgeInsets.only(left: 50,right: 50),
                       child: Form(
+                        key: _formKey,
                         child: Column(
                           children: <Widget>[
                             TextFormField(
-                              validator: (val) => val.isEmpty ? 'Enter username/email' : null,
+                              validator: (val) => val.isEmpty ? 'Name is Required' : null,
                               cursorColor: Colors.red,
                               decoration: InputDecoration(
                                   hintText: 'Name',
@@ -60,7 +71,7 @@ class _SignUpState extends State<SignUp> {
                                       borderSide: BorderSide(color: Colors.red))),
                             ),
                             TextFormField(
-                              validator: (val) => val.isEmpty ? 'Enter username/email' : null,
+                              validator: (val) => val.isEmpty ? 'Email required' : null,
                               cursorColor: Colors.red,
                               decoration: InputDecoration(
                                   hintText: 'email',
@@ -75,7 +86,7 @@ class _SignUpState extends State<SignUp> {
                             ),
                             TextFormField(
                               obscureText: true,
-                              validator: (val) => val.isEmpty ? 'Enter username/email' : null,
+                              validator: (val) => val.length < 6 ? 'Password must be 7 char long' : null,
                               cursorColor: Colors.red,
                               decoration: InputDecoration(
                                   hintText: 'password',
@@ -97,9 +108,18 @@ class _SignUpState extends State<SignUp> {
                                child: RaisedButton(
                                 onPressed: () async {
 
+                                  if(_formKey.currentState.validate()){
+
+                                    dynamic result = await _auth.registerWithEmailAndPassword(email,password);
+                                    if(result == null){
+                                      setState(() =>error = 'please give valid email');
+                                    }
+
+                                  }
+
                                 },
                                 child: Text(
-                                  'LOGIN',
+                                  'SIGNUP',
                                   style: TextStyle(color: Colors.red, fontSize: 20),
                                 ),
                                 shape: RoundedRectangleBorder(
