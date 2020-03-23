@@ -198,15 +198,8 @@ class _LoginState extends State<Login> {
                                         height: 55,
                                         width: 355,
                                         child: RaisedButton(
-                                          onPressed: () async {
-                              if(_formKey.currentState.validate()){
+                                          onPressed: () {
 
-                                dynamic result = await _auth.registerWithEmailAndPassword(email,password);
-                                if(result == null){
-                                  setState(() =>error = 'please give valid email');
-                                }
-
-                              }
                                           },
                                           child: Text(
                                             'LOGIN',
