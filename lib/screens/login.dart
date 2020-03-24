@@ -8,6 +8,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as JSON;
 
+import 'package:toast/toast.dart';
+
 class Login extends StatefulWidget {
   @override
   _LoginState createState() => _LoginState();
@@ -74,10 +76,12 @@ class _LoginState extends State<Login> {
     _googleSignIn.signOut();
     facebookLogin.logOut();
 
+
     setState(() {
       _isLoggedIn = false;
       _userData.loginStatus = 2;
       _userData.loginStatus = 1;
+      _userData.loginStatus = 3;
     });
   }
 
@@ -145,6 +149,9 @@ class _LoginState extends State<Login> {
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: <Widget>[
                                       TextFormField(
+                                        onChanged: (val){
+                                          setState(() => email = val);
+                                        },
                                         validator: (val) => val.isEmpty
                                             ? 'Enter username/email'
                                             : null,
@@ -164,6 +171,9 @@ class _LoginState extends State<Login> {
                                                     color: Colors.red))),
                                       ),
                                       TextFormField(
+                                        onChanged: (val){
+                                          setState(() => password = val);
+                                        },
                                         obscureText: true,
                                         validator: (val) => val.length < 6
                                             ? 'Enter at least 7 char password'
@@ -198,7 +208,17 @@ class _LoginState extends State<Login> {
                                         height: 55,
                                         width: 355,
                                         child: RaisedButton(
-                                          onPressed: () {
+                                          onPressed: () async {
+
+                                            dynamic result = await _auth.signInWithEmailAndPassword(email, password);
+                                            if(result==null){
+                                              setState((){
+                                                error = 'please supply valid email';
+                                              });
+                                            }else{
+                                              showToast('welcome');
+                                              Navigator.pop(context);
+                                            }
 
                                           },
                                           child: Text(
@@ -311,5 +331,8 @@ class _LoginState extends State<Login> {
               ),
       ),
     );
+  }
+  void showToast(String msg, {int duration, int gravity}) {
+    Toast.show(msg, context, duration: duration, gravity: gravity);
   }
 }

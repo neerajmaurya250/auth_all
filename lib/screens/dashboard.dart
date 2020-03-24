@@ -1,4 +1,6 @@
 import 'package:authall/constants/constant.dart';
+import 'package:authall/screens/user_profile.dart';
+import 'package:authall/services/auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -8,6 +10,8 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  final AuthService _auth = AuthService();
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -64,8 +68,9 @@ class _DashboardState extends State<Dashboard> {
                 )
               ],
             ),
-            actions: <Widget>[
+             actions: <Widget>[
               PopupMenuButton<String>(
+
                 onSelected: choiceAction,
                 itemBuilder: (BuildContext context) {
                   return Constants.choices.map((String choice) {
@@ -77,6 +82,35 @@ class _DashboardState extends State<Dashboard> {
                 },
               )
             ],
+/*actions: <Widget>[
+              IconButton(
+                icon: Icon(Icons.more_vert),
+                onPressed: (){
+                  showDialog(context: context,
+                    builder: (BuildContext context){
+                    return AlertDialog(
+                      content: GestureDetector(
+                        onTap: ()async{
+                          await _auth.signOut();
+                          Navigator.pop(context);
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Icon(Icons.power_settings_new),
+                            SizedBox(width: 10,),
+                            new Text("LOGOUT"),
+                          ],
+                        ),
+                      ),
+                    );
+                    }
+                  );
+                },
+              )
+            ],*/
+
+
             iconTheme: IconThemeData(color: Colors.blue[900]),
             elevation: 0.0,
             backgroundColor: Colors.white,
@@ -211,7 +245,10 @@ class _DashboardState extends State<Dashboard> {
                       size: 30,
                       color: Colors.grey[400],
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => UserProfile()));
+                    },
                   ),
                   IconButton(
                     icon: Icon(
@@ -230,6 +267,12 @@ class _DashboardState extends State<Dashboard> {
   }
 
   void choiceAction(String choice) {
-    print('SignOut');
+
+    _auth.signOut();
+    Navigator.pop(context);
+
+
+
   }
+
 }

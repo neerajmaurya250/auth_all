@@ -1,5 +1,5 @@
 import 'package:authall/screens/login.dart';
-import 'package:authall/screens/sign_up.dart';
+import 'package:authall/signup/sign_up.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
