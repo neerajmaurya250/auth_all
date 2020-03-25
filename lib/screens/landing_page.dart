@@ -6,7 +6,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class LandingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
     var dataScreen = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
@@ -54,7 +53,10 @@ class LandingPage extends StatelessWidget {
                           width: 2.0,
                         ),
                         onPressed: () {
-                          Navigator.push(context, MaterialPageRoute (builder: (context) => SignUp()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SignUp()));
                         },
                         child: Text(
                           'SIGN UP',

@@ -1,4 +1,3 @@
-import 'package:authall/constants/constant.dart';
 import 'package:authall/screens/user_profile.dart';
 import 'package:authall/services/auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -44,7 +43,7 @@ class _DashboardState extends State<Dashboard> {
                   child: Text(
                     'Tickets',
                     style: TextStyle(
-                     color: Colors.grey[400],
+                      color: Colors.grey[400],
                     ),
                   ),
                 ),
@@ -68,7 +67,7 @@ class _DashboardState extends State<Dashboard> {
                 )
               ],
             ),
-             actions: <Widget>[
+            /*actions: <Widget>[
               PopupMenuButton<String>(
 
                 onSelected: choiceAction,
@@ -81,36 +80,36 @@ class _DashboardState extends State<Dashboard> {
                   }).toList();
                 },
               )
-            ],
-/*actions: <Widget>[
+            ],*/
+            actions: <Widget>[
               IconButton(
                 icon: Icon(Icons.more_vert),
-                onPressed: (){
-                  showDialog(context: context,
-                    builder: (BuildContext context){
-                    return AlertDialog(
-                      content: GestureDetector(
-                        onTap: ()async{
-                          await _auth.signOut();
-                          Navigator.pop(context);
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Icon(Icons.power_settings_new),
-                            SizedBox(width: 10,),
-                            new Text("LOGOUT"),
-                          ],
-                        ),
-                      ),
-                    );
-                    }
-                  );
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          content: GestureDetector(
+                            onTap: () async {
+                              await _auth.signOut();
+                              Navigator.pop(context);
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Icon(Icons.power_settings_new),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                new Text("LOGOUT"),
+                              ],
+                            ),
+                          ),
+                        );
+                      });
                 },
               )
-            ],*/
-
-
+            ],
             iconTheme: IconThemeData(color: Colors.blue[900]),
             elevation: 0.0,
             backgroundColor: Colors.white,
@@ -124,35 +123,27 @@ class _DashboardState extends State<Dashboard> {
           body: TabBarView(
             children: <Widget>[
               Container(
-
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                   Card(
-                     child: Column(
-                       children: <Widget>[
-                         Text('STATS'),
-                         Text('3'),
-                         Row(
-                           children: <Widget>[
-                             Column(
-                               children: <Widget>[
-                                 Text('ACTIVE'),
-                                 Text('7')
-                               ],
-                             ),
-                             Column(
-                               children: <Widget>[
-                                 Text('ACTIVE'),
-                                 Text('7')
-                               ],
-                             ),
-                           ],
-                         )
-
-                       ],
-                     ),
-                   ),
+                    Card(
+                      child: Column(
+                        children: <Widget>[
+                          Text('STATS'),
+                          Text('3'),
+                          Row(
+                            children: <Widget>[
+                              Column(
+                                children: <Widget>[Text('ACTIVE'), Text('7')],
+                              ),
+                              Column(
+                                children: <Widget>[Text('ACTIVE'), Text('7')],
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
                     Card(
                       color: Colors.blue,
                       child: Column(
@@ -162,45 +153,49 @@ class _DashboardState extends State<Dashboard> {
                           Row(
                             children: <Widget>[
                               Column(
-                                children: <Widget>[
-                                  Text('ACTIVE'),
-                                  Text('7')
-                                ],
+                                children: <Widget>[Text('ACTIVE'), Text('7')],
                               ),
                               Column(
-                                children: <Widget>[
-                                  Text('ACTIVE'),
-                                  Text('7')
-                                ],
+                                children: <Widget>[Text('ACTIVE'), Text('7')],
                               ),
                             ],
                           )
-
                         ],
                       ),
                     )
-
                   ],
                 ),
               ),
               Center(
                 child: Container(
-                  child: Text('Enquiries',style: TextStyle(color: Colors.blue,fontSize: 40),),
+                  child: Text(
+                    'Enquiries',
+                    style: TextStyle(color: Colors.blue, fontSize: 40),
+                  ),
                 ),
               ),
               Center(
                 child: Container(
-                  child: Text('Tickets',style: TextStyle(color: Colors.blue,fontSize: 40),),
+                  child: Text(
+                    'Tickets',
+                    style: TextStyle(color: Colors.blue, fontSize: 40),
+                  ),
                 ),
               ),
               Center(
                 child: Container(
-                  child: Text('Teams',style: TextStyle(color: Colors.blue,fontSize: 40),),
+                  child: Text(
+                    'Teams',
+                    style: TextStyle(color: Colors.blue, fontSize: 40),
+                  ),
                 ),
               ),
               Center(
                 child: Container(
-                  child: Text('Clients',style: TextStyle(color: Colors.blue,fontSize: 40),),
+                  child: Text(
+                    'Clients',
+                    style: TextStyle(color: Colors.blue, fontSize: 40),
+                  ),
                 ),
               ),
             ],
@@ -246,8 +241,10 @@ class _DashboardState extends State<Dashboard> {
                       color: Colors.grey[400],
                     ),
                     onPressed: () {
-
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => UserProfile()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => UserProfile()));
                     },
                   ),
                   IconButton(
@@ -261,18 +258,12 @@ class _DashboardState extends State<Dashboard> {
                 ],
               ),
             ),
-          )
-      ),
+          )),
     );
   }
 
   void choiceAction(String choice) {
-
     _auth.signOut();
     Navigator.pop(context);
-
-
-
   }
-
 }

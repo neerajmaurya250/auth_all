@@ -7,7 +7,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as JSON;
-
 import 'package:toast/toast.dart';
 
 class Login extends StatefulWidget {
@@ -24,14 +23,14 @@ class _LoginState extends State<Login> {
   String password = '';
   String error = '';
 
-//form validation
-
+//Check user is logged in or not
   bool _isLoggedIn = false;
   Map userProfile;
   final facebookLogin = FacebookLogin();
   GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
   UserData _userData = UserData();
 
+//Google SignIn
   _loginGoogle() async {
     try {
       await _googleSignIn.signIn();
@@ -45,9 +44,9 @@ class _LoginState extends State<Login> {
     }
   }
 
+  //Facebook SignIn
   _loginWithFB() async {
     final result = await facebookLogin.logInWithReadPermissions(['email']);
-
     switch (result.status) {
       case FacebookLoginStatus.loggedIn:
         final token = result.accessToken.token;
@@ -62,7 +61,6 @@ class _LoginState extends State<Login> {
           _userData.name = userProfile["name"];
         });
         break;
-
       case FacebookLoginStatus.cancelledByUser:
         setState(() => _isLoggedIn = false);
         break;
@@ -72,10 +70,10 @@ class _LoginState extends State<Login> {
     }
   }
 
+  //Logout
   _logout() {
     _googleSignIn.signOut();
     facebookLogin.logOut();
-
 
     setState(() {
       _isLoggedIn = false;
@@ -91,25 +89,7 @@ class _LoginState extends State<Login> {
     return Scaffold(
       body: Center(
         child: _isLoggedIn
-            ?
-//            Column(
-//                mainAxisAlignment: MainAxisAlignment.center,
-//                children: <Widget>[
-//                  Image.network(
-//                    _userData.profileImage,
-//                    height: 50.0,
-//                    width: 50.0,
-//                  ),
-//                  Text(_userData.name),
-//                  OutlineButton(
-//                    child: Text("Logout"),
-//                    onPressed: () {
-//                      _logout();
-//                    },
-//                  )
-//                ],
-//              )
-      Dashboard()
+            ? Dashboard()
             : Container(
                 decoration: BoxDecoration(
                     image: DecorationImage(
@@ -149,7 +129,7 @@ class _LoginState extends State<Login> {
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: <Widget>[
                                       TextFormField(
-                                        onChanged: (val){
+                                        onChanged: (val) {
                                           setState(() => email = val);
                                         },
                                         validator: (val) => val.isEmpty
@@ -171,7 +151,7 @@ class _LoginState extends State<Login> {
                                                     color: Colors.red))),
                                       ),
                                       TextFormField(
-                                        onChanged: (val){
+                                        onChanged: (val) {
                                           setState(() => password = val);
                                         },
                                         obscureText: true,
@@ -209,31 +189,32 @@ class _LoginState extends State<Login> {
                                         width: 355,
                                         child: RaisedButton(
                                           onPressed: () async {
-
-                                            dynamic result = await _auth.signInWithEmailAndPassword(email, password);
-                                            if(result==null){
-                                              setState((){
-                                                error = 'please supply valid email';
+                                            dynamic result = await _auth
+                                                .signInWithEmailAndPassword(
+                                                    email, password);
+                                            if (result == null) {
+                                              setState(() {
+                                                error =
+                                                    'please supply valid email';
                                               });
-                                            }else{
+                                            } else {
                                               showToast('welcome');
                                               Navigator.pop(context);
                                             }
-
                                           },
                                           child: Text(
                                             'LOGIN',
                                             style: TextStyle(
-                                                color: Colors.red, fontSize: 20),
+                                                color: Colors.red,
+                                                fontSize: 20),
                                           ),
                                           shape: RoundedRectangleBorder(
                                               borderRadius:
-                                              BorderRadius.circular(50.0)),
+                                                  BorderRadius.circular(50.0)),
                                           color: Colors.white,
                                           elevation: 0.0,
                                         ),
                                       ),
-
                                     ],
                                   ),
                                 ),
@@ -241,7 +222,6 @@ class _LoginState extends State<Login> {
                               SizedBox(
                                 height: 10,
                               ),
-
                               Padding(
                                 padding:
                                     const EdgeInsets.only(left: 40, right: 40),
@@ -332,6 +312,7 @@ class _LoginState extends State<Login> {
       ),
     );
   }
+
   void showToast(String msg, {int duration, int gravity}) {
     Toast.show(msg, context, duration: duration, gravity: gravity);
   }
